@@ -11,6 +11,7 @@
 import Room from '../../employee/entities/room';
 import Entity from '../../../core/entities/entity';
 import Identity from '../../../core/entities/identity';
+import { Optional } from '../../../core/types/optional';
 
 type BookingType = {
     room: Room
@@ -22,8 +23,14 @@ type BookingType = {
 
 export default class Booking extends Entity<BookingType> {    
 
-    constructor(data: BookingType, id?: Identity) { //caso eu receba um funcionário novo e ainda não tenha o id)
-        super(data, id); //chama o construtor da classe pai (Entity)
+    // constructor(data: BookingType, id?: Identity) { //caso eu receba um funcionário novo e ainda não tenha o id)
+    //     super(data, id); //chama o construtor da classe pai (Entity)
+    // }
+
+    /* Posso substituir o consrutor com um método static que cria uma instância*/
+
+    static create(data: Optional<BookingType, 'isActive'>, id?: Identity) {
+        return new Booking({ ...data, isActive: data.isActive?? true }, id);
     }
 
     get room() {

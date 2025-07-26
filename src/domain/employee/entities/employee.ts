@@ -17,8 +17,14 @@ type EmployeeType = {
 };
 export default class Employee extends Entity<EmployeeType> {
 
-    constructor(data: EmployeeType, id?: Identity) {
-        super(data, id);
+    // constructor(data: EmployeeType, id?: Identity) {
+    //     super(data, id);
+    // }
+    
+    /* Posso substituir o consrutor com um método static que cria uma instância*/
+
+   static create(data: EmployeeType, id?: Identity) {
+        return new Employee(data, id);
     }
 
     get name() {

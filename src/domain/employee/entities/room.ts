@@ -8,6 +8,7 @@ A classe será exportada como padrão para ser usada em outros módulos.
 
 import Entity from '../../../core/entities/entity';
 import Identity from '../../../core/entities/identity';
+import { Optional } from '../../../core/types/optional';
 
 type RoomType = {
     name: string;
@@ -21,9 +22,32 @@ type RoomType = {
     };
 
 export default class Room extends Entity<RoomType> {
-    constructor(data: RoomType, id?: Identity) {
-        super(data, id);
+    // constructor(data: RoomType, id?: Identity) {
+    //     super(data, id);
+    // }
+
+     /* Posso substituir o consrutor com um método static que cria uma instância*/
+
+    static create(
+        data: Optional<
+        RoomType, 
+        | 'hasWifi' 
+        | 'hasAirConditioning' 
+        | 'hasKitchen' 
+        | 'isPetFriendly' 
+        | 'isAvailable'
+        >, 
+        id?: Identity
+    ) {
+        return new Room({ ...data, 
+            hasWifi: data.hasWifi ?? false, 
+            hasAirConditioning: data.hasAirConditioning ?? false, 
+            hasKitchen: data.hasKitchen ?? false, 
+            isPetFriendly: data.isPetFriendly ?? false, 
+            isAvailable: data.isAvailable ?? true },
+            id);
     }
+
     get name() {
         return this.attributes.name;
     }
