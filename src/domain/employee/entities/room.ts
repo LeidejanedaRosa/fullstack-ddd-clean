@@ -9,10 +9,11 @@ A classe será exportada como padrão para ser usada em outros módulos.
 import Entity from '../../../core/entities/entity';
 import Identity from '../../../core/entities/identity';
 import { Optional } from '../../../core/types/optional';
+import Money from '../../shared/value-objects/money'; // objeto de valor do DDD
 
 type RoomType = {
     name: string;
-    price: number;
+    price: Money;
     image: string;
     hasWifi: boolean;
     hasAirConditioning: boolean;
@@ -76,7 +77,7 @@ export default class Room extends Entity<RoomType> {
     set name(name: string) {
         this.attributes.name = name;
     }
-    set price(price: number) {
+    set price(price: Money) {
         this.attributes.price = price;
     }
     set image(image: string) {

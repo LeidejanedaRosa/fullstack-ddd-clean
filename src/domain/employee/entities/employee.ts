@@ -9,10 +9,11 @@
 
 import Entity from '../../../core/entities/entity';
 import Identity from '../../../core/entities/identity';
+import Email from '../../shared/value-objects/email'; // objeto de valor do DDD
 
 type EmployeeType = {
     name: string;
-    email: string;
+    email: Email;
     password: string;
 };
 export default class Employee extends Entity<EmployeeType> {
@@ -20,7 +21,7 @@ export default class Employee extends Entity<EmployeeType> {
     // constructor(data: EmployeeType, id?: Identity) {
     //     super(data, id);
     // }
-    
+
     /* Posso substituir o consrutor com um método static que cria uma instância*/
 
    static create(data: EmployeeType, id?: Identity) {
@@ -43,7 +44,7 @@ export default class Employee extends Entity<EmployeeType> {
         this.attributes.name = name;
     }
 
-    set email(email: string) {
+    set email(email: Email) {
         this.attributes.email = email;
     }
 
