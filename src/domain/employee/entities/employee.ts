@@ -6,28 +6,42 @@
 //src/domain/employee/entities/employee.ts
 //private nesse caso significa que essas propriedades não podem ser acessadas 
 // diretamente de fora da classe, é um encapsulamento.
-import { randomUUID } from 'node:crypto';
+
+import Entity from '../../../core/entities/entity';
+import Identity from '../../../core/entities/identity';
 
 type EmployeeType = {
     name: string;
     email: string;
     password: string;
 };
+export default class Employee extends Entity<EmployeeType> {
 
-export default class Employee {
-    private id: string; 
-    private name: string;
-    private email: string;
-    private password: string;
+    constructor(data: EmployeeType, id?: Identity) {
+        super(data, id);
+    }
 
-    // constructor(id: string, name: string, email: string, password: string) {
-    //Ao invés de passar os parâmetros individualmente,
-    //vamos passar um objeto do tipo EmployeeType, para ficar mais organizado, limpo.
+    get name() {
+        return this.attributes.name;
+    }
 
-    constructor(data: EmployeeType, id?: string) { //caso eu receba um funcionário novo e ainda não tenha o id)
-        this.id = id ?? randomUUID(); //se não receber um id, gera um novo id aleatório
-        this.name = data.name;
-        this.email = data.email;
-        this.password = data.password;
+    get email() {
+        return this.attributes.email;
+    }
+
+    get password() {
+        return this.attributes.password;
+    }
+
+    set name(name: string) {
+        this.attributes.name = name;
+    }
+
+    set email(email: string) {
+        this.attributes.email = email;
+    }
+
+    set password(password: string) {
+        this.attributes.password = password;
     }
 }

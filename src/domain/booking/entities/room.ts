@@ -3,11 +3,14 @@
 //A classe terá um construtor para inicializar essas propriedades.
 //Além disso, vamos adicionar métodos para acessar essas propriedades.
 //A classe será exportada como padrão para ser usada em outros módulos.
-//src/domain/employee/entities/employee.ts
+
 //private nesse caso significa que essas propriedades não podem ser acessadas 
 // diretamente de fora da classe, é um encapsulamento.
-import { randomUUID } from 'node:crypto';
+
+
 import Room from '../../employee/entities/room';
+import Entity from '../../../core/entities/entity';
+import Identity from '../../../core/entities/identity';
 
 type BookingType = {
     room: Room
@@ -17,20 +20,39 @@ type BookingType = {
     isActive: boolean;
     };
 
-export default class Booking {
-    private id: string;
-    private room: Room;
-    private days: number;
-    private customer: string;
-    private email: string;
-    private isActive: boolean;    
+export default class Booking extends Entity<BookingType> {    
 
-    constructor(data: BookingType, id?: string) { //caso eu receba um funcionário novo e ainda não tenha o id)
-        this.id = id ?? randomUUID(); //se não receber um id, gera um novo id aleatório
-        this.room = data.room;
-        this.days = data.days;
-        this.customer = data.customer;
-        this.email = data.email;
-        this.isActive = data.isActive;
+    constructor(data: BookingType, id?: Identity) { //caso eu receba um funcionário novo e ainda não tenha o id)
+        super(data, id); //chama o construtor da classe pai (Entity)
     }
+
+    get room() {
+        return this.attributes.room;
+    }
+    get days() {
+        return this.attributes.days;
+    }
+    get customer() {
+        return this.attributes.customer;
+    }
+    get email() {
+        return this.attributes.email;
+    }
+    get isActive() {
+        return this.attributes.isActive;
+    }
+    // Não podemos alterar o quarto de uma reserva, por isso não temos um setter para room
+
+    set days(days: number) {
+        this.attributes.days = days;
+    }
+    set customer(customer: string) {
+        this.attributes.customer = customer;
+    }
+    set email(email: string) {
+        this.attributes.email = email;
+    }
+    set isActive(value: boolean) {
+        this.attributes.isActive = value;
+    }   
 }
